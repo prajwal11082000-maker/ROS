@@ -7,14 +7,12 @@
 ### git config --list
 
 
-Step-by-Step: Add “Open With SmartGit” Option:
+# Step-by-Step: Add “Open With SmartGit” Option:
 
-Make sure your .desktop entry exists
-nano ~/.local/share/applications/smartgit.desktop
+### Make sure your .desktop entry exists
+### nano ~/.local/share/applications/smartgit.desktop
 
-
-
-Paste (or update) this content:
+### Paste (or update) this content:
 [Desktop Entry]
 Name=SmartGit
 Comment=Git client for developers
@@ -26,13 +24,13 @@ Terminal=false
 MimeType=inode/directory;
 
 
-Make it executable
-chmod +x ~/.local/share/applications/smartgit.desktop
+### Make it executable
+### chmod +x ~/.local/share/applications/smartgit.desktop
 
 
-Update desktop database
-update-desktop-database ~/.local/share/applications
+### Update desktop database
+### update-desktop-database ~/.local/share/applications
 
-Restart the file manager (optional)
-nautilus -q
+### Restart the file manager (optional)
+### nautilus -q
 
