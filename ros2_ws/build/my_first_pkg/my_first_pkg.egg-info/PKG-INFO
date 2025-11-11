@@ -1,0 +1,13 @@
+Metadata-Version: 2.1
+Name: my-first-pkg
+Version: 0.0.0
+Summary: My first ROS 2 talker-listener package
+Home-page: UNKNOWN
+Maintainer: enmac
+Maintainer-email: prajwal11082000@gmail.com
+License: Apache License 2.0
+Platform: UNKNOWN
+Provides-Extra: test
+
+UNKNOWN
+
