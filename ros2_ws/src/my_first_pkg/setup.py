@@ -27,6 +27,7 @@ setup(
         'console_scripts': [
             'talker = my_first_pkg.talker:main',
             'listener = my_first_pkg.listener:main',
+            'run_both = my_first_pkg.run_both:main',
         ],
     },
 )

@@ -34,3 +34,11 @@ MimeType=inode/directory;
 ### Restart the file manager (optional)
 ### nautilus -q
 
+colcon build --packages-select my_first_pkg
+call install\setup.bat
+
+ros2 run my_first_pkg run_both
+
+python -m pip install pyinstaller
+
+pyinstaller --onefile --noconsole --name talker_listener d:\ROS\ROS\ros2_ws\src\my_first_pkg\my_first_pkg\run_both.py
