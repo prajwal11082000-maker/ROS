@@ -44,9 +44,15 @@ python -m pip install pyinstaller
 pyinstaller --onefile --noconsole --name talker_listener d:\ROS\ROS\ros2_ws\src\my_first_pkg\my_first_pkg\run_both.py
 
 # Turtle Sim:
+
 ros2 run turtlesim turtlesim_node
+
 ros2 run turtlesim turtle_teleop_key
+
 ros2 node list
+
 ros2 node info /turtlesim
+
 ros2 topic list
+
 ros2 topic info /turtle1/cmd_vel
