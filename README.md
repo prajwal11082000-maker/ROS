@@ -53,6 +53,10 @@ ros2 node list
 
 ros2 node info /turtlesim
 
-ros2 topic list
+# run robot
 
-ros2 topic info /turtle1/cmd_vel
+enmac@enmac-OptiPlex-5060:~/proj_1$ colcon build --symlink-install
+
+enmac@enmac-OptiPlex-5060:~/proj_1$ source install/setup.bash
+
+enmac@enmac-OptiPlex-5060:~/proj_1$ bash -c "source install/setup.bash && ros2 launch my_robot_controller robot.launch.py"
