@@ -56,7 +56,9 @@ ros2 node info /turtlesim
 # run robot
 
 enmac@enmac-OptiPlex-5060:~/proj_1$ colcon build --symlink-install
-# TF frames define where every part of the robot and world is located → and ROS 2 uses them to convert coordinates between sensors, robot, and map.
+
 enmac@enmac-OptiPlex-5060:~/proj_1$ source install/setup.bash
 
 enmac@enmac-OptiPlex-5060:~/proj_1$ bash -c "source install/setup.bash && ros2 launch my_robot_controller robot.launch.py"
+
+# TF frames define where every part of the robot and world is located → and ROS 2 uses them to convert coordinates between sensors, robot, and map.
