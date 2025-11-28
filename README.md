@@ -62,3 +62,19 @@ enmac@enmac-OptiPlex-5060:~/proj_1$ source install/setup.bash
 enmac@enmac-OptiPlex-5060:~/proj_1$ bash -c "source install/setup.bash && ros2 launch my_robot_controller robot.launch.py"
 
 # TF frames define where every part of the robot and world is located → and ROS 2 uses them to convert coordinates between sensors, robot, and map.
+
+# nav2 generate map
+
+enmac@enmac-OptiPlex-5060:~$ sudo apt install ros-humble-navigation2 ros-humble-nav2-bringup ros-humble-turtlebot3*
+
+enmac@enmac-OptiPlex-5060:~$ sudo apt install ros-humble-slam-toolbox
+
+enmac@enmac-OptiPlex-5060:~$ ros2 launch turtlebot3_gazebo turtlebot3_world.launch.py
+
+enmac@enmac-OptiPlex-5060:~$ ros2 launch nav2_bringup navigation_launch.py use_sim_time:=True
+
+enmac@enmac-OptiPlex-5060:~$ ros2 launch slam_toolbox online_async_launch.py use_sim_time:=True
+
+enmac@enmac-OptiPlex-5060:~$ ros2 run rviz2 rviz2 -d /opt/ros/humble/share/nav2_bringup/rviz/nav2_default_view.rviz
+
+enmac@enmac-OptiPlex-5060:~$ ros2 run nav2_map_server map_saver_cli -f my_map
