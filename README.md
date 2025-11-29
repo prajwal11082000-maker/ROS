@@ -303,6 +303,8 @@ Step 7: Add Gazebo sensor/drive plugins
 
 ### How to run
 
+enmac@enmac-OptiPlex-5060:~/ros_tutorial/urdf_tutorial$ ros2 launch urdf_tutorial display.launch.py model:=urdf/01-myfirst.urdf
+
 ros2 launch urdf_tutorial display.launch.py model:=urdf/01-myfirst.urdf
 
 ros2 launch urdf_tutorial display.launch.py model:=urdf/02-multipleshapes.urdf
