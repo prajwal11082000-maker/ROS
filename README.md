@@ -63,6 +63,25 @@ https://docs.ros.org/en/rolling/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-
 
 # How to Run and Build
 
+### Project Explanation
+
+This project contains a ROS 2 Python package named my_first_pkg. It demonstrates a basic communication system with "talker" and "listener" nodes.
+
+### Key Components:
+
+Package Name: my_first_pkg
+
+Type: ament_python (Python-based ROS 2 package)
+
+### Nodes:
+
+talker: Publishes messages (likely a "Hello World" counter).
+
+listener: Subscribes to the messages published by the talker.
+
+Launch File: talker_listener.launch.py (Launches both talker and listener simultaneously).
+
+
 cd /home/enmac/ROS/ROS/ros2_ws
 
 colcon build --packages-select my_first_pkg
