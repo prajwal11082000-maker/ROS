@@ -328,6 +328,10 @@ enmac@enmac-OptiPlex-5060:~/proj_1$ bash -c "source install/setup.bash && ros2 l
 
 # nav2 generate map
 
+A robot (simulated or real) publishing /scan (LIDAR) and /tf.
+
+Teleoperation node (to drive the robot manually).
+
 enmac@enmac-OptiPlex-5060:~$ sudo apt install ros-humble-navigation2 ros-humble-nav2-bringup ros-humble-turtlebot3*
 
 enmac@enmac-OptiPlex-5060:~$ sudo apt install ros-humble-slam-toolbox
@@ -338,6 +342,89 @@ enmac@enmac-OptiPlex-5060:~$ ros2 launch nav2_bringup navigation_launch.py use_s
 
 enmac@enmac-OptiPlex-5060:~$ ros2 launch slam_toolbox online_async_launch.py use_sim_time:=True
 
+enmac@enmac-OptiPlex-5060:~$ ros2 run teleop_twist_keyboard teleop_twist_keyboard
+
 enmac@enmac-OptiPlex-5060:~$ ros2 run rviz2 rviz2 -d /opt/ros/humble/share/nav2_bringup/rviz/nav2_default_view.rviz
 
 enmac@enmac-OptiPlex-5060:~$ ros2 run nav2_map_server map_saver_cli -f my_map
+
+# Nav2
+
+a highly modular system designed to move a robot from Point A to Point B safely and efficiently while avoiding obstacles.
+
+The Workflow:
+
+Localization: The robot figures out where it is (AMCL/SLAM).
+
+Global Planning: It calculates a long path from start to goal (like Google Maps).
+
+Local Planning (Control): It calculates immediate velocity commands (cmd_vel) to follow that path while dodging sudden obstacles (like a driver steering).
+
+## Types of Maps in Nav2
+
+Nav2 uses several "layers" of maps to understand the world. It doesn't just use one static image.
+
+### Static Map (Occupancy Grid):
+
+Format: Usually a .pgm (image) and .yaml (metadata) file.
+
+The permanent map of walls and furniture created using SLAM. White pixels are free space, black are walls, and gray is unknown.
+
+### Global Costmap:
+
+Description: A map used by the Global Planner to calculate the long-term path. It inflates the size of walls based on the robot's radius so the robot doesn't plan a path too close to a wall.
+
+### Local Costmap:
+
+Description: A smaller, rolling window (e.g., 3x3 meters) that moves with the robot. It updates in real-time using LIDAR/Depth Camera data to detect dynamic obstacles (like people or pets) that aren't on the static map.
+
+### Costmap Filters (Masks):
+
+Keep-out Zones: A map layer used to strictly forbid the robot from entering certain areas (e.g., wet floors, steep drops).
+
+Speed Limit Zones: A map layer that tells the robot to slow down in specific areas (e.g., a warehouse intersection).
+
+## Important Algorithms in Nav2
+To master Nav2, you must understand that "Planning" is split into two parts: Global (Path) and Local (Control).
+
+A. Global Planners (Path Finding)
+
+NavFn (Dijkstra/A*): The classic, reliable algorithm. Finds the mathematically shortest path.
+
+Smac Planner: A more advanced planner that supports:
+
+Hybrid-A*: Good for car-like (Ackermann) robots that can't turn in place.
+
+State Lattice: Generates smooth, kinematically feasible paths.
+
+B. Controllers / Local Planners (Path Following)
+
+DWB (Dynamic Window Approach): The standard. It simulates multiple short trajectories and picks the one that makes the most progress without hitting obstacles.
+
+MPPI (Model Predictive Path Integral): A modern, high-performance controller that uses GPU/CPU to simulate thousands of trajectories. excellent for dynamic environments and avoiding "jerky" movements.
+
+RPP (Regulated Pure Pursuit): Simple and efficient, often used for Ackermann (car-like) steering robots.
+
+## Localization & Mapping
+
+AMCL (Adaptive Monte Carlo Localization): The algorithm used to track the robot's position on an existing map using particle filters.
+
+SLAM Toolbox: The recommended algorithm in ROS 2 Humble for creating maps. It is graph-based and robust.
+
+## Key Concepts (Nav2)
+
+### Behavior Trees (BT):
+
+Nav2 logic is defined in XML files. Instead of writing C++ code to change how the robot behaves (e.g., "If path is blocked, wait 5 seconds, then back up"), you edit the Behavior Tree XML. Understanding Sequence, Fallback, and Recovery nodes is crucial.
+
+### Lifecycle Nodes:
+
+Nav2 nodes (planner, controller, map_server) are "Lifecycle" nodes. They don't just "start"; they go through states: Unconfigured → Inactive → Active. You must "configure" and "activate" them (usually handled by the nav2_lifecycle_manager).
+
+### Costmap Inflation & Footprint:
+
+Tuning the inflation_radius and robot_footprint is the #1 reason why navigation fails. If the inflation is too high, the robot thinks it can't fit through a door. If too low, it scrapes the walls.
+
+### TF (Transforms):
+
+You must have a perfect TF tree (map -> odom -> base_link -> lidar_link). If your TFs are broken, Nav2 will refuse to move.
