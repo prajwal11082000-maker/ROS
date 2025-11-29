@@ -189,9 +189,45 @@ ros2 topic list
 
 ros2 topic echo /turtle1/cmd_vel
 
-ros2 topic pub  /turtlesim1/turtle1/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 2.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 1.8}}"
+# How to control/move the Turtle using terminal commands (ROS 2)
 
-ros2 topic pub  /turtlesim2/turtle1/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 2.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: -1.8}}"
+linear.x  → forward/backward speed
+
+linear.y  → strafe (not used in turtlesim)
+
+linear.z  → up/down (not used)
+
+angular.x → roll (not used)
+
+angular.y → pitch (not used)
+
+angular.z → rotation (turn left/right)
+
+Move forward
+
+ros2 topic pub -r 5 /turtle1/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 2.0}, angular: {z: 0.0}}"
+
+Turn left
+
+ros2 topic pub -r 5 /turtle1/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.0}, angular: {z: 2.0}}"
+
+Move forward while turning
+
+ros2 topic pub -r 5 /turtle1/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 1.5}, angular: {z: 1.5}}"
+
+Stop the turtle
+
+ros2 topic pub -1 /turtle1/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.0}, angular: {z: 0.0}}"
+
+publish/rotate only once
+
+ros2 topic pub /turtle1/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 2.0}, angular: {z: 1.0}}"
+
+continuously move/rotate, add -r 5 (publish at 5 Hz):
+
+ros2 topic pub -r 5 /turtle1/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 2.0}, angular: {z: 1.0}}"
+
+
 
 # URDF
 
