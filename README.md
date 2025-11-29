@@ -195,6 +195,86 @@ ros2 topic pub  /turtlesim2/turtle1/cmd_vel geometry_msgs/msg/Twist "{linear: {x
 
 # URDF
 
+## Robot Kinematics Basics
+
+Every URDF describes the robot using links and joints:
+
+Link = Physical rigid part
+(wheel, chassis, arm segment, sensor body)
+
+Joint = Connection between two links
+(revolute, continuous, fixed, prismatic, etc.)
+
+You must know:
+
+How many rigid parts exist
+
+How they are connected
+
+Degrees of freedom (DoF)
+
+Joint limits, axis, and type
+
+## Coordinate Frames
+
+Each link has its own origin coordinate frame (x, y, z).
+URDF uses right-handed coordinate system.
+
+You must define:
+
+origin/pose of child link relative to parent
+
+orientation (roll–pitch–yaw)
+
+## Mass, Inertia, and Physical Properties
+
+URDF needs physical info for simulation:
+
+mass
+
+inertia matrix
+
+center of mass
+
+## Geometry
+
+You describe shape using:
+
+Box
+
+Cylinder
+
+Sphere
+
+Mesh (.stl / .dae)
+
+## Sensors and Plugins
+
+URDF does not simulate sensors —
+but you can include:
+
+<gazebo> tags (for lidar, camera, plugins)
+
+## All Important URDF Tags & What They Mean
+
+### <robot> root tag : ROBOT name
+
+### <link> — describes each rigid part
+
+inertial: Mass and inertia:
+
+<inertial>
+  
+  <origin xyz="0 0 0" rpy="0 0 0"/>
+  
+  <mass value="1.0"/>
+  
+  <inertia ixx="1" iyy="1" izz="1" ixy="0" ixz="0" iyz="0"/>
+  
+</inertial>
+
+
+
 ros2 launch urdf_tutorial display.launch.py model:=urdf/01-myfirst.urdf
 
 ros2 launch urdf_tutorial display.launch.py model:=urdf/02-multipleshapes.urdf
