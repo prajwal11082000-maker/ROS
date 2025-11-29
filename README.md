@@ -1,3 +1,8 @@
+# install ros2 humble on ubuntu:
+
+https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debs.html
+
+
 # install Git on Ubuntu
 ### sudo apt update
 ### sudo apt install git -y
@@ -42,6 +47,21 @@ ros2 run my_first_pkg run_both
 python -m pip install pyinstaller
 
 pyinstaller --onefile --noconsole --name talker_listener d:\ROS\ROS\ros2_ws\src\my_first_pkg\my_first_pkg\run_both.py
+
+# How to Run and Build
+
+cd /home/enmac/ROS/ROS/ros2_ws
+
+colcon build --packages-select my_first_pkg
+
+source install/setup.bash
+
+ros2 run my_first_pkg talker
+
+ros2 run my_first_pkg listener
+
+ros2 launch my_first_pkg talker_listener.launch.py
+
 
 # Turtle Sim:
 
