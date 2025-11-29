@@ -257,23 +257,51 @@ but you can include:
 
 ## All Important URDF Tags & What They Mean
 
-### <robot> root tag : ROBOT name
+robot root tag : ROBOT name
 
-### <link> — describes each rigid part
+link tag — describes each rigid part
 
-inertial: Mass and inertia:
+inertial tag : Mass and inertia:
 
-<inertial>
-  
-  <origin xyz="0 0 0" rpy="0 0 0"/>
-  
-  <mass value="1.0"/>
-  
-  <inertia ixx="1" iyy="1" izz="1" ixy="0" ixz="0" iyz="0"/>
-  
-</inertial>
+visual tag
 
+collision
 
+### geometry tag
+
+Box, Cylinder, Sphere, Mesh.
+
+### joint — connects two links
+
+fixed:	no motion
+
+revolute:	rotates within limits
+
+continuous:	rotates unlimited (like a wheel)
+
+prismatic:	linear sliding
+
+floating:	6 DoF (rare)
+
+planar:	motion in 2D plane
+
+## URDF Creation Checklist (Always Follow This)
+
+Step 1: Identify all robot links: (chassis, wheels, arms, sensors)
+
+Step 2: Define geometry + visuals: (box, cylinder, sphere, mesh)
+
+Step 3: Add mass + inertia: (store values or approximate)
+
+Step 4: Add joints: (type, parent–child, axis, limits)
+
+Step 5: Ensure correct origins and alignment: (joint origin is the MOST important part!)
+
+Step 6: Add transmissions (if using ros2_control) : Required if you want to load controller:
+
+Step 7: Add Gazebo sensor/drive plugins
+
+### How to run
 
 ros2 launch urdf_tutorial display.launch.py model:=urdf/01-myfirst.urdf
 
