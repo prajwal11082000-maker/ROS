@@ -94,6 +94,21 @@ ros2 topic pub  /turtlesim1/turtle1/cmd_vel geometry_msgs/msg/Twist "{linear: {x
 
 ros2 topic pub  /turtlesim2/turtle1/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 2.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: -1.8}}"
 
+# URDF
+
+ros2 launch urdf_tutorial display.launch.py model:=urdf/01-myfirst.urdf
+
+ros2 launch urdf_tutorial display.launch.py model:=urdf/02-multipleshapes.urdf
+
+ros2 launch urdf_tutorial display.launch.py model:=urdf/03-origins.urdf
+
+ros2 launch urdf_tutorial display.launch.py model:=urdf/04-materials.urdf
+
+ros2 launch urdf_tutorial display.launch.py model:=urdf/05-visual.urdf
+
+ros2 launch urdf_tutorial display.launch.py model:=urdf/06-flexible.urdf
+
+
 # run robot
 
 enmac@enmac-OptiPlex-5060:~/proj_1$ colcon build --symlink-install
