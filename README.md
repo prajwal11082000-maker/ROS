@@ -81,6 +81,86 @@ listener: Subscribes to the messages published by the talker.
 
 Launch File: talker_listener.launch.py (Launches both talker and listener simultaneously).
 
+package.xml: Tells ROS 2 "I am a package", what I depend on (rclpy, std_msgs), and who maintains me.
+
+setup.py: Standard Python build script. It tells ROS 2 how to install your python scripts so they become executables (ros2 run ...).
+
+launch/: Stores scripts that automate starting multiple nodes at once.
+
+### Talker Node (talker.py)
+This node publishes data.
+
+class Talker(Node): Inherits from the ROS 2 Node class.
+
+self.create_publisher(String, 'chatter', 10):
+
+Creates a publisher on the topic named 'chatter'.
+
+Message type is String.
+
+Queue size is 10 (keeps last 10 messages if network is busy).
+
+self.create_timer(1.0, self.timer_cb): Calls timer_cb every 1.0 second.
+
+timer_cb: 
+
+The function that actually does the work:
+
+Creates a String message.
+
+Sets data to "hello [count]".
+
+Publishes it using self.pub.publish(msg).
+
+### Listener Node (listener.py)
+
+This node subscribes to data.
+
+class Listener(Node): Inherits from Node.
+
+self.create_subscription(String, 'chatter', self.cb, 10):
+
+Listens to the same topic 'chatter'.
+
+When a message arrives, it calls the function self.cb.
+
+cb(self, msg): 
+
+The callback function.
+
+Receives the msg.
+
+Logs it to the console: I heard: "hello ..."
+
+### Launch File (talker_listener.launch.py)
+
+This script automates running both nodes.
+
+LaunchDescription: A container for all actions.
+
+Node(...): Describes a node to run.
+
+package='my_first_pkg': Look in this package.
+
+executable='talker': Run the entry point named talker (defined in setup.py).
+
+It does the same for the listener.
+
+### Data Flow
+
+Start: You run ros2 launch my_first_pkg talker_listener.launch.py.
+
+Launch: The launch system starts both the talker process and the listener process.
+
+Publish: Every 1 second, talker creates a message "hello X" and sends it to the topic chatter.
+
+Transport: ROS 2 middleware (DDS) carries this message over the network (or shared memory).
+
+Subscribe: The listener is waiting for messages on chatter. It receives the message.
+
+Callback: The listener executes its cb function and prints "I heard: hello X" to the console.
+
+### Execution
 
 cd /home/enmac/ROS/ROS/ros2_ws
 
